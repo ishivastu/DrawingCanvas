@@ -53,7 +53,9 @@ export default function Canvas() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Standard drag-to-draw start
   const startDrawing = (e) => {
+    if (e.target.closest('.toolbar-container')) return;
     setIsDrawing(true);
     const rect = canvasRef.current.getBoundingClientRect();
     lastPosition.current = {
@@ -62,11 +64,12 @@ export default function Canvas() {
     };
   };
 
+  // Standard drag movement
   const draw = (e) => {
     if (!isDrawing) return;
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
-    const rect = canvas.getBoundingClientRect();
+    const rect = canvasRef.current.getBoundingClientRect();
 
     const currentX = e.clientX - rect.left;
     const currentY = e.clientY - rect.top;
@@ -95,6 +98,7 @@ export default function Canvas() {
     lastPosition.current = { x: currentX, y: currentY };
   };
 
+  // Stop drawing when mouse button or finger is released
   const stopDrawing = () => {
     setIsDrawing(false);
   };
@@ -108,15 +112,17 @@ export default function Canvas() {
 
   return (
     <main className="relative w-screen h-screen overflow-hidden bg-[#090d16] select-none touch-none">
-      <Toolbar
-        color={color}
-        setColor={setColor}
-        brushSize={brushSize}
-        setBrushSize={setBrushSize}
-        activeTool={activeTool}
-        setActiveTool={setActiveTool}
-        clearCanvas={clearCanvas}
-      />
+      <div className="toolbar-container">
+        <Toolbar
+          color={color}
+          setColor={setColor}
+          brushSize={brushSize}
+          setBrushSize={setBrushSize}
+          activeTool={activeTool}
+          setActiveTool={setActiveTool}
+          clearCanvas={clearCanvas}
+        />
+      </div>
       <canvas
         ref={canvasRef}
         onPointerDown={startDrawing}

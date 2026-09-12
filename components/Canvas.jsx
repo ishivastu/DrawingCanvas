@@ -6,8 +6,8 @@ import Toolbar from './Toolbar';
 export default function Canvas() {
   const canvasRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
-  const [color, setColor] = useState('#ec4899'); // Default changed to Pink
-  const [brushSize, setBrushSize] = useState(10); // Default changed to 10px
+  const [color, setColor] = useState('#ec4899'); // Pink default
+  const [brushSize, setBrushSize] = useState(10); // 10px default
   const [activeTool, setActiveTool] = useState('brush');
   
   const lastPosition = useRef({ x: 0, y: 0 });
@@ -107,7 +107,7 @@ export default function Canvas() {
   };
 
   return (
-    <main className="relative w-screen h-screen overflow-hidden bg-[#090d16] select-none">
+    <main className="relative w-screen h-screen overflow-hidden bg-[#090d16] select-none touch-none">
       <Toolbar
         color={color}
         setColor={setColor}
@@ -119,10 +119,10 @@ export default function Canvas() {
       />
       <canvas
         ref={canvasRef}
-        onMouseDown={startDrawing}
-        onMouseMove={draw}
-        onMouseUp={stopDrawing}
-        onMouseLeave={stopDrawing}
+        onPointerDown={startDrawing}
+        onPointerMove={draw}
+        onPointerUp={stopDrawing}
+        onPointerLeave={stopDrawing}
         className="absolute inset-0 cursor-crosshair block"
       />
     </main>

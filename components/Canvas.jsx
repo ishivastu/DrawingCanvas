@@ -6,8 +6,8 @@ import Toolbar from './Toolbar';
 export default function Canvas() {
   const canvasRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
-  const [color, setColor] = useState('#6366f1');
-  const [brushSize, setBrushSize] = useState(5);
+  const [color, setColor] = useState('#ec4899'); // Default changed to Pink
+  const [brushSize, setBrushSize] = useState(10); // Default changed to 10px
   const [activeTool, setActiveTool] = useState('brush');
   
   const lastPosition = useRef({ x: 0, y: 0 });
